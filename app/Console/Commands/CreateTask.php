@@ -15,7 +15,7 @@ class CreateTask extends Command
      *
      * @var string
      */
-    protected $signature = 'task:create {count}';
+    protected $signature = 'task:create {count=10}';
 
     /**
      * The console command description.
