@@ -26,20 +26,21 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy existing application directory contents
 COPY . .
 
+# Ensure permissions are set correctly
+RUN chown -R www-data:www-data /var/www/html
+
 # Install application dependencies
 RUN composer install --optimize-autoloader --no-dev
 
-# Copy existing application directory permissions
-COPY --chown=www-data:www-data . .
+# Ensure .env file is copied
+COPY .env.example .env
+
+# Copy entrypoint script
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
 
 # Expose port 80
 EXPOSE 80
 
-# Run Laravel commands
-RUN php artisan key:generate
-RUN php artisan config:cache
-RUN php artisan route:cache
-RUN php artisan view:cache
-
-# Start Apache server
-CMD ["apache2-foreground"]
+# Start the script
+ENTRYPOINT ["start.sh"]
