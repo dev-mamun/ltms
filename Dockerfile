@@ -40,7 +40,7 @@ COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
 # Expose port 80
-EXPOSE 80
+#EXPOSE 80
 
 # Start the script
 ENTRYPOINT ["start.sh"]
