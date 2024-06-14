@@ -1,46 +1,41 @@
-# Use the official PHP image with Apache
-FROM php:8.0-apache
-
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    zip \
-    unzip \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd \
-    && docker-php-ext-install pdo pdo_mysql
-
-# Enable Apache rewrite module
-RUN a2enmod rewrite
+# Use the official PHP image as a base image
+FROM php:8.0-fpm
 
 # Set working directory
 WORKDIR /var/www/html
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    locales \
+    zip \
+    jpegoptim optipng pngquant gifsicle \
+    vim \
+    unzip \
+    git \
+    curl
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Copy existing application directory contents
-COPY . .
+COPY . /var/www/html
 
-# Ensure permissions are set correctly
-RUN chown -R www-data:www-data /var/www/html
+# Copy existing application directory permissions
+COPY --chown=www-data:www-data . /var/www/html
 
-# Install application dependencies
-RUN composer install --optimize-autoloader --no-dev
+# Change current user to www
+USER www-data
 
-# Ensure .env file is copied
-COPY .env.example .env
-
-# Copy entrypoint script
-COPY start.sh /usr/local/bin/start.sh
-RUN chmod +x /usr/local/bin/start.sh
-
-# Expose port 80
-#EXPOSE 80
-
-# Start the script
-ENTRYPOINT ["start.sh"]
+# Expose port 9000 and start php-fpm server
+EXPOSE 9000
+CMD ["php-fpm"]
