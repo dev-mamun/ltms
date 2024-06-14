@@ -41,8 +41,8 @@ COPY --chown=www-data:www-data . /var/www/html
 RUN composer install --no-dev --optimize-autoloader
 
 # Generate application key
-RUN php artisan key:generate
+#RUN php artisan key:generate
 
 # Expose port 9000 and start php-fpm server
-EXPOSE 9000
+#EXPOSE 9000
 CMD ["/start.sh"]
