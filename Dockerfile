@@ -16,13 +16,17 @@ RUN apt-get update && apt-get install -y \
     vim \
     unzip \
     git \
-    curl
+    curl \
+    libzip-dev \
+    libonig-dev \
+    libxml2-dev
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+# Install PHP extensions
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -33,8 +37,11 @@ COPY . /var/www/html
 # Copy existing application directory permissions
 COPY --chown=www-data:www-data . /var/www/html
 
-# Change current user to www
-USER www-data
+# Install Composer dependencies
+RUN composer install --no-dev --optimize-autoloader
+
+# Generate application key
+RUN php artisan key:generate
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000

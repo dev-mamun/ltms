@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: laravel-app
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        fromDatabase: true
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        value: https://your-app.onrender.com
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        fromService: mysql
+      - key: DB_PORT
+        value: 3306
+      - key: DB_DATABASE
+        fromDatabase: true
+      - key: DB_USERNAME
+        fromDatabase: true
+      - key: DB_PASSWORD
+        fromDatabase: true
+
+  - type: private_service
+    name: mysql
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: MYSQL_ROOT_PASSWORD
+        value: your_root_password
+      - key: MYSQL_DATABASE
+        value: your_database
+      - key: MYSQL_USER
+        value: your_user
+      - key: MYSQL_PASSWORD
+        value: your_password

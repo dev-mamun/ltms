@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: your-app-image
+        container_name: your-app-container
+        restart: unless-stopped
+        working_dir: /var/www/html
+        volumes:
+            - .:/var/www/html
+        networks:
+            - app-network
+
+    webserver:
+        image: nginx:alpine
+        container_name: your-nginx-container
+        restart: unless-stopped
+        ports:
+            - "80:80"
+        volumes:
+            - .:/var/www/html
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf
+        networks:
+            - app-network
+
+    db:
+        image: mysql:5.7
+        container_name: your-mysql-container
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: your_root_password
+            MYSQL_DATABASE: your_database
+            MYSQL_USER: your_user
+            MYSQL_PASSWORD: your_password
+        volumes:
+            - dbdata:/var/lib/mysql
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    dbdata:
+        driver: local
