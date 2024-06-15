@@ -1,8 +1,20 @@
 # Use the official PHP image as a base image
-FROM php:8.0-fpm
+#FROM php:8.0-fpm
+FROM ubuntu:20.04
+
+LABEL maintainer="Abdullah Al Mamun"
+
+ARG WWWGROUP
+ARG NODE_VERSION=16
+ARG POSTGRES_VERSION=13
 
 # Set working directory
 WORKDIR /var/www/html
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV TZ=UTC
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
@@ -19,7 +31,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     libzip-dev \
     libonig-dev \
-    libxml2-dev
+    libxml2-dev \
+    supervisor
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -44,5 +57,5 @@ RUN composer install --no-dev --optimize-autoloader
 #RUN php artisan key:generate
 
 # Expose port 9000 and start php-fpm server
-EXPOSE 80
+EXPOSE 9000
 CMD ["./start.sh"]
