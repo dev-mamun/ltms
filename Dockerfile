@@ -1,6 +1,6 @@
 # Use the official PHP image as a base image
-#FROM php:8.0-fpm
-FROM ubuntu:20.04
+FROM php:8.0-fpm
+#FROM ubuntu:20.04
 
 LABEL maintainer="Abdullah Al Mamun"
 
