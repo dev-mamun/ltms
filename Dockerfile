@@ -1,4 +1,4 @@
-FROM richarvey/nginx-php-fpm:1.7.2
+FROM wyveo/nginx-php-fpm:php74
 
 COPY . .
 
