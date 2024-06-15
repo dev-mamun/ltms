@@ -1,5 +1,7 @@
 FROM wyveo/nginx-php-fpm:php74
 
+WORKDIR /var/www/html
+
 COPY . .
 
 RUN chmod +x 00-laravel-deploy.sh
