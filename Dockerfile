@@ -58,4 +58,4 @@ RUN composer install --no-dev --optimize-autoloader
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
-CMD ["./start.sh"]
+CMD ["/start.sh"]
