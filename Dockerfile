@@ -2,19 +2,19 @@
 FROM php:8.0-fpm
 #FROM ubuntu:20.04
 
-LABEL maintainer="Abdullah Al Mamun"
-
-ARG WWWGROUP
-ARG NODE_VERSION=16
-ARG POSTGRES_VERSION=13
+#LABEL maintainer="Abdullah Al Mamun"
+#
+#ARG WWWGROUP
+#ARG NODE_VERSION=16
+#ARG POSTGRES_VERSION=13
 
 # Set working directory
 WORKDIR /var/www/html
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV TZ=UTC
+#ENV DEBIAN_FRONTEND noninteractive
+#ENV TZ=UTC
 
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+#RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
