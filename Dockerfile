@@ -2,6 +2,7 @@ FROM richarvey/nginx-php-fpm:1.7.2
 
 COPY . .
 
+RUN chmod +x 00-laravel-deploy.sh
 # Image config
 ENV SKIP_COMPOSER 1
 ENV WEBROOT /var/www/html/public
@@ -17,4 +18,4 @@ ENV LOG_CHANNEL stderr
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-CMD ["00-laravel-deploy.sh"]
+CMD ["./00-laravel-deploy.sh"]
