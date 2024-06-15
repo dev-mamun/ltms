@@ -44,5 +44,5 @@ RUN composer install --no-dev --optimize-autoloader
 #RUN php artisan key:generate
 
 # Expose port 9000 and start php-fpm server
-#EXPOSE 9000
+EXPOSE 80
 CMD ["./start.sh"]
