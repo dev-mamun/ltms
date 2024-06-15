@@ -12,7 +12,7 @@ services:
       - key: APP_DEBUG
         value: false
       - key: APP_URL
-        value: https://your-app.onrender.com
+        value: https://ltms.onrender.com
       - key: DB_CONNECTION
         value: mysql
       - key: DB_HOST
