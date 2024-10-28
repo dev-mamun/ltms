@@ -18,8 +18,9 @@ ENV REAL_IP_HEADER 1
 
 # Laravel config
 ENV APP_ENV production
-ENV APP_DEBUG false
+ENV APP_DEBUG true
 ENV LOG_CHANNEL stderr
+ENV APP_URL https://ltms.onrender.com/
 
 # SQLite database configuration
 ENV DB_CONNECTION=sqlite
