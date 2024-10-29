@@ -20,6 +20,7 @@
     <div class="card mt-3">
         <div class="card-header">
             <h1>Add New Task</h1>
+            <span>{{route('task.store')}}</span>
         </div>
         <div class="card-body bg-light">
             <form name="new-task" method="post" action="{{route('task.store')}}">
