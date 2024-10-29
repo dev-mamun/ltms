@@ -18,7 +18,7 @@ ENV REAL_IP_HEADER 1
 
 # Laravel config
 ENV APP_ENV production
-ENV APP_DEBUG true
+ENV APP_DEBUG false
 ENV LOG_CHANNEL stderr
 ENV APP_URL https://ltms.onrender.com/
 
