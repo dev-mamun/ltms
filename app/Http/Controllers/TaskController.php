@@ -17,7 +17,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all()->sortByDesc('priority');
+        $tasks = Task::all();
         return view('dashboard', compact('tasks'));
     }
 
